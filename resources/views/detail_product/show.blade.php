@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $product->name . ' — RoboCore')
+@section('title', $product->name . ' — Fardigi')
 
 @section('extra-css')
 <link rel="preconnect" href="https://fonts.googleapis.com">

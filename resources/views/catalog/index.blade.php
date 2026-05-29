@@ -383,13 +383,36 @@
                         
                         <div class="p-card-img">
                             @if($prod->image_url)
-                                <img src="{{ $prod->image_url }}" alt="{{ $prod->name }}" referrerpolicy="no-referrer">
+                                @php
+                                    $imgUrl = $prod->image_url;
+                                    
+                                    // Jika bukan gambar dari internet (http)
+                                    if (!str_starts_with($imgUrl, 'http')) {
+                                        // 1. Bersihkan dulu dari awalan '/' jika ada
+                                        $imgUrl = ltrim($imgUrl, '/');
+                                        
+                                        // 2. Bersihkan dari kata 'public/' jika ada
+                                        $imgUrl = str_replace('public/', '', $imgUrl);
+                                        
+                                        // 3. Jika di database SUDAH ADA kata 'storage/', langsung panggil saja
+                                        if (str_starts_with($imgUrl, 'storage/')) {
+                                            $imgUrl = asset($imgUrl);
+                                        } 
+                                        // 4. Jika BELUM ADA, baru kita tambahkan kata 'storage/'
+                                        else {
+                                            $imgUrl = asset('storage/' . $imgUrl);
+                                        }
+                                    }
+                                @endphp
+                                <img src="{{ $imgUrl }}" alt="{{ $prod->name }}" referrerpolicy="no-referrer">
                             @else
                                 <div class="p-card-img-placeholder"><span style="font-weight:800; font-size:44px; color:#c7d8ed; letter-spacing:-.02em;">{{ substr($prod->sku,0,3) }}</span></div>
                             @endif
+                            
                             <span class="badge-sku" style="z-index:2;">{{ $prod->sku }}</span>
                             <span class="badge-stk {{ $sk }}" style="z-index:2;">{{ $sl }}</span>
                         </div>
+                        
                         <div class="p-card-body">
                             <div>
                                 <span class="p-card-cat">{{ $prod->category->name }}</span>
@@ -642,7 +665,15 @@
                     @endphp
                     <div style="display:flex; gap:14px; padding-bottom:16px; border-bottom:1px solid var(--border);">
                         <div style="width:64px; height:64px; background:#f0f4f8; border-radius:12px; overflow:hidden; flex-shrink:0;">
-                            @if($p->image_url) <img src="{{ $p->image_url }}" alt="" style="width:100%; height:100%; object-fit:cover;"> @else <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:20px; color:#cbd5e1; font-weight:800;">{{ substr($p->sku,0,1) }}</div> @endif
+                            @if($p->image_url) 
+                                @if(str_starts_with($p->image_url, 'http'))
+                                    <img src="{{ $p->image_url }}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                                @else
+                                    <img src="{{ asset('storage/' . $p->image_url) }}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                                @endif
+                            @else 
+                                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:20px; color:#cbd5e1; font-weight:800;">{{ substr($p->sku,0,1) }}</div> 
+                            @endif
                         </div>
                         <div style="flex:1;">
                             <div style="font-size:9px; font-weight:700; color:var(--primary); margin-bottom:2px;">{{ $p->sku }}</div>

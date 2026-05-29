@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Panel - RoboCore')
+@section('title', 'Admin Panel - Fardigi')
 
 @section('extra-css')
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -248,7 +248,7 @@
                     <div class="text-center mb-8">
                         <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">📊</div>
                         <h2 class="text-2xl font-black text-slate-800 mb-2">Export Data Laporan</h2>
-                        <p class="text-sm text-slate-500">Unduh rekapitulasi transaksi RoboCore dalam format Microsoft Excel (.xls) untuk keperluan pembukuan.</p>
+                        <p class="text-sm text-slate-500">Unduh rekapitulasi transaksi Fardigi dalam format Microsoft Excel (.xls) untuk keperluan pembukuan.</p>
                     </div>
 
                     <form method="GET" action="{{ route('admin.export.excel') }}" class="bg-slate-50 border border-slate-200 p-8 rounded-3xl shadow-sm">
@@ -359,7 +359,8 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Harga Jual (Rp)</label>
-                            <input type="number" name="price" id="f-price" required min="0" class="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:border-[#2072FB] focus:ring-1 focus:ring-[#2072FB] outline-none font-mono transition bg-slate-50 focus:bg-white">
+                            <input type="text" id="f-price-display" required placeholder="0" class="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:border-[#2072FB] focus:ring-1 focus:ring-[#2072FB] outline-none font-mono transition bg-slate-50 focus:bg-white" oninput="formatInputRupiah(this)">
+                            <input type="hidden" name="price" id="f-price">
                         </div>
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Stok Awal</label>
@@ -389,7 +390,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">URL Gambar Online</label>
-                            <input type="url" name="image_url" id="f-url" placeholder="https://..." class="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:border-[#2072FB] focus:ring-1 focus:ring-[#2072FB] outline-none transition bg-slate-50 focus:bg-white">
+                            <input type="text" name="image_url" id="f-url" placeholder="https://..." class="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:border-[#2072FB] focus:ring-1 focus:ring-[#2072FB] outline-none transition bg-slate-50 focus:bg-white">
                         </div>
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Atau Upload File Gambar (Max 2MB)</label>
@@ -413,6 +414,18 @@
     function formatRp(angka) {
         return new Intl.NumberFormat('id-ID').format(angka);
     }
+    
+    function formatInputRupiah(input) {
+        let angkaMurni = input.value.replace(/[^0-9]/g, '');
+        document.getElementById('f-price').value = angkaMurni;
+        input.value = angkaMurni ? new Intl.NumberFormat('id-ID').format(angkaMurni) : '';
+    }
+
+    @if($errors->any())
+        window.onload = function() {
+            openForm(); 
+        }
+    @endif
 
     async function viewOrder(id) {
         try {
@@ -470,22 +483,33 @@
         document.getElementById('f-form').action = "{{ route('admin.products.store') }}";
         document.getElementById('f-method').innerHTML = '';
         document.getElementById('f-form').reset();
+        
+        document.getElementById('f-price-display').value = '';
+        document.getElementById('f-price').value = '';
+        document.querySelector('input[type="file"][name="image_file"]').value = '';
+        
         document.getElementById('modal-product').style.display = 'flex';
     }
     
     function editForm(p) {
-        document.getElementById('f-title').innerText = 'Edit: ' + p.sku;
-        document.getElementById('f-form').action = "/admin/products/" + p.id;
+        document.getElementById('f-title').innerText = 'Edit: ' + p.sku;  
+        let baseUrl = "{{ route('admin.products.update', ':id') }}";
+        document.getElementById('f-form').action = baseUrl.replace(':id', p.id);
         document.getElementById('f-method').innerHTML = '<input type="hidden" name="_method" value="PUT">';
         document.getElementById('f-sku').value = p.sku;
         document.getElementById('f-cat').value = p.category_id;
         document.getElementById('f-name').value = p.name;
+        
         document.getElementById('f-price').value = p.price;
+        document.getElementById('f-price-display').value = new Intl.NumberFormat('id-ID').format(p.price);
+        
         document.getElementById('f-stock').value = p.stock;
         document.getElementById('f-desc').value = p.description;
         document.getElementById('f-tips').value = p.datasheet_tips || '';
-        document.getElementById('f-pinout').value = p.pinout_data || '';
-        document.getElementById('f-url').value = p.image_url || '';
+        document.getElementById('f-pinout').value = p.pinout_data ? JSON.stringify(p.pinout_data, null, 2) : '';
+        document.getElementById('f-url').value = (p.image_url && p.image_url.startsWith('http')) ? p.image_url : '';
+        
+        document.querySelector('input[type="file"][name="image_file"]').value = '';
         document.getElementById('modal-product').style.display = 'flex';
     }
     

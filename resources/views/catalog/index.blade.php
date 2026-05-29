@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Katalog Komponen Elektronika & IoT — RoboCore')
+@section('title', 'Katalog Komponen Elektronika & IoT — Fardigi')
 
 @section('extra-css')
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,7 +236,7 @@
 @section('content')
 <div class="ticker-wrap py-2">
     @php
-        $ticks = ["⚡ Kode AYOBELAJAR! berlaku untuk semua komponen", "🔧 Stok baru: ESP32 · Arduino Mega · Raspberry Pi 5", "📦 Bayar tunai saat ambil di counter RoboCore", "🎓 Komponen robotika, IoT & elektronika terlengkap", "🔩 200+ jenis komponen siap pakai"];
+        $ticks = ["⚡ Kode AYOBELAJAR! berlaku untuk semua komponen", "🔧 Stok baru: ESP32 · Arduino Mega · Raspberry Pi 5", "📦 Bayar tunai saat ambil di counter Fardigi", "🎓 Komponen robotika, IoT & elektronika terlengkap", "🔩 200+ jenis komponen siap pakai"];
         $str = implode("  ·  ", array_merge($ticks, $ticks));
     @endphp
    <div class="ticker-inner" style="font-size:11px; font-weight:500; color:#000000; letter-spacing:.03em; word-spacing:0.1em;">
@@ -461,13 +461,13 @@
             </div>
             <div class="footer-info-item">
                 <div class="footer-info-icon">✉️</div>
-                <div>support@robocore.id</div>
+                <div>support@fardigi.id</div>
             </div>
         </div>
     </div>
     
     <div class="footer-bottom">
-        <div>&copy; 2026 RoboCore. Hak cipta dilindungi undang-undang.</div>
+        <div>&copy; 2026 Fardigi. Hak cipta dilindungi undang-undang.</div>
         <div class="footer-bottom-links">
             <a href="#">Kebijakan Privasi</a>
             <a href="#">Syarat & Ketentuan</a>
@@ -506,7 +506,7 @@
         
         <div class="auth-left">
             <div class="auth-left-content">
-                <h2 class="auth-title">Selamat Datang di<br><span>RoboCore.</span></h2>
+                <h2 class="auth-title">Selamat Datang di<br><span>Fardigi.</span></h2>
                 <p class="auth-desc">Pusat penyedia komponen IoT, elektronika, dan robotika terlengkap. Kami memastikan kualitas produk dan pengiriman yang cepat.</p>
                 <div class="auth-proof">
                     <div class="auth-avatars">
@@ -539,7 +539,15 @@
                     </div>
                     <div class="auth-input-group">
                         <label class="auth-label">Password</label>
-                        <input type="password" name="password" class="auth-input" placeholder="Masukkan password" required>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" name="password" id="login-password" class="auth-input" style="padding-right: 40px;" placeholder="Masukkan password" required>
+                            <button type="button" onclick="togglePassword('login-password', this)" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #94a3b8; padding: 0; display: flex; transition: color 0.2s;">
+                                <svg class="eye-icon" style="width: 18px; height: 18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div class="auth-options">
                         <label class="auth-check"><input type="checkbox" name="remember"> Ingat Saya</label>
@@ -547,7 +555,7 @@
                     </div>
                     <button type="submit" class="btn-auth-submit">Log in</button>
                     <div class="auth-switch">
-                        Pengguna baru di RoboCore? <a href="javascript:void(0)" onclick="toggleAuthForm('register')" class="auth-link">Daftar Gratis</a>
+                        Pengguna baru di Fardigi? <a href="javascript:void(0)" onclick="toggleAuthForm('register')" class="auth-link">Daftar Gratis</a>
                     </div>
                 </form>
             </div>
@@ -582,8 +590,16 @@
                     </div>
                     
                     <div class="auth-input-group">
-                        <label class="auth-label">Password *</label>
-                        <input type="password" name="password" class="auth-input" placeholder="Minimal 8 karakter" required>
+                        <label class="auth-label">Password</label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" name="password" id="login-password" class="auth-input" style="padding-right: 40px;" placeholder="Masukkan password" required>
+                            <button type="button" onclick="togglePassword('login-password', this)" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #94a3b8; padding: 0; display: flex; transition: color 0.2s;">
+                                <svg class="eye-icon" style="width: 18px; height: 18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn-auth-submit" style="margin-top: 5px;">Daftar Sekarang</button>
@@ -767,6 +783,23 @@
         } else {
             loginForm.style.display = 'block';
             registerForm.style.display = 'none';
+        }
+    }
+
+    // ── KONTROL TAMPILKAN PASSWORD (MATA) ──
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        
+        if (input.type === 'password') {
+            // Ubah ke teks & Ganti ikon jadi mata dicoret (eye-slash)
+            input.type = 'text';
+            btn.style.color = '#2072FB'; // Berubah biru saat dilihat
+            btn.innerHTML = `<svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>`;
+        } else {
+            // Kembalikan ke titik-titik (password) & ikon mata normal
+            input.type = 'password';
+            btn.style.color = '#94a3b8'; // Kembali abu-abu
+            btn.innerHTML = `<svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`;
         }
     }
 

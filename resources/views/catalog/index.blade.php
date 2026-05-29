@@ -515,13 +515,6 @@
                     <div class="auth-proof-text">Bergabung bersama 5.000+ Makers lainnya!</div>
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <svg style="width:160px; height:auto; opacity:0.9;" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="20" y="50" width="160" height="90" rx="8" fill="#e2e8f0"/>
-                        <rect x="30" y="60" width="140" height="50" rx="4" fill="#fff"/>
-                        <circle cx="100" cy="125" r="8" fill="#94a3b8"/>
-                        <path d="M40 30 L160 30" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
-                        <path d="M70 15 L130 15" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
-                    </svg>
                 </div>
             </div>
         </div>

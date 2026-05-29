@@ -527,13 +527,15 @@
         </div>
 
         <div class="auth-right">
+            <!-- Form Login -->
             <div id="form-login-section">
                 <h3 class="auth-form-title">Log in</h3>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="auth-input-group">
-                        <label class="auth-label">Alamat E-mail</label>
-                        <input type="email" name="email" class="auth-input" placeholder="contoh@email.com" required>
+                        <label class="auth-label">Username / E-mail</label>
+                        <!-- name diubah menjadi username untuk menyesuaikan sistem Anda -->
+                        <input type="text" name="username" class="auth-input" placeholder="Masukkan username atau email" required>
                     </div>
                     <div class="auth-input-group">
                         <label class="auth-label">Password</label>
@@ -550,23 +552,41 @@
                 </form>
             </div>
 
+            <!-- Form Register -->
             <div id="form-register-section" style="display: none;">
                 <h3 class="auth-form-title">Buat Akun Baru</h3>
-                <form method="POST" action="{{ route('register') }}">
+                <!-- Route disesuaikan dengan sistem lama Anda: register.post -->
+                <form method="POST" action="{{ route('register.post') }}">
                     @csrf
-                    <div class="auth-input-group">
-                        <label class="auth-label">Nama Lengkap</label>
-                        <input type="text" name="name" class="auth-input" placeholder="Nama sesuai identitas" required>
+                    
+                    <!-- Dibuat Grid agar pop-up tidak terlalu memanjang ke bawah -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="auth-input-group">
+                            <label class="auth-label">Username *</label>
+                            <input type="text" name="username" class="auth-input" placeholder="farrel_pro" required>
+                        </div>
+                        <div class="auth-input-group">
+                            <label class="auth-label">No HP / Telp *</label>
+                            <input type="text" name="phone" class="auth-input" placeholder="0812..." required>
+                        </div>
                     </div>
+
                     <div class="auth-input-group">
-                        <label class="auth-label">Alamat E-mail</label>
+                        <label class="auth-label">Nama Lengkap *</label>
+                        <input type="text" name="fullname" class="auth-input" placeholder="Sesuai identitas" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label class="auth-label">Alamat E-mail *</label>
                         <input type="email" name="email" class="auth-input" placeholder="contoh@email.com" required>
                     </div>
+                    
                     <div class="auth-input-group">
-                        <label class="auth-label">Password</label>
+                        <label class="auth-label">Password *</label>
                         <input type="password" name="password" class="auth-input" placeholder="Minimal 8 karakter" required>
                     </div>
-                    <button type="submit" class="btn-auth-submit" style="margin-top: 10px;">Daftar Sekarang</button>
+
+                    <button type="submit" class="btn-auth-submit" style="margin-top: 5px;">Daftar Sekarang</button>
                     <div class="auth-switch">
                         Sudah punya akun? <a href="javascript:void(0)" onclick="toggleAuthForm('login')" class="auth-link">Log in di sini</a>
                     </div>
